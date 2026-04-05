@@ -1,23 +1,126 @@
-<div class="container">
-  <h1>Mood-Based Song Recommendation</h1>
-  <p class="subtitle">Choose your mood and get song suggestions 🎵</p>
+<div class="app-shell">
+  <div class="floating-blur blur-1"></div>
+  <div class="floating-blur blur-2"></div>
+  <div class="floating-blur blur-3"></div>
 
-  <div class="mood-buttons">
-    <button (click)="selectMood('Happy')">😊 Happy</button>
-    <button (click)="selectMood('Sad')">😢 Sad</button>
-    <button (click)="selectMood('Chill')">😌 Chill</button>
-    <button (click)="selectMood('Energetic')">⚡ Energetic</button>
-  </div>
+  <div class="container">
+    <!-- HERO -->
+    <section class="hero glass">
+      <p class="badge">🎵 Angular Mini Project • Deployed on GitHub Pages</p>
+      <h1>Mood-Based Song Recommendation</h1>
+      <p class="subtitle">
+        Select your vibe and discover songs that match your mood 💜
+      </p>
 
-  <div *ngIf="selectedMood" class="results">
-    <h2>{{ selectedMood }} Songs</h2>
-
-    <div class="song-grid">
-      <div class="song-card" *ngFor="let song of filteredSongs">
-        <img [src]="song.image" [alt]="song.title">
-        <h3>{{ song.title }}</h3>
-        <p>{{ song.artist }}</p>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-number">6</span>
+          <span class="stat-label">Mood Categories</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">18</span>
+          <span class="stat-label">Recommended Songs</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">Live</span>
+          <span class="stat-label">GitHub Deployment</span>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <!-- MOOD SECTION -->
+    <section class="mood-section glass">
+      <div class="section-head">
+        <h2>Choose Your Mood</h2>
+        <button class="reset-btn" (click)="resetSelection()">Reset</button>
+      </div>
+
+      <div class="mood-grid">
+        <button
+          *ngFor="let mood of moods"
+          class="mood-card {{ mood.color }}"
+          (click)="selectMood(mood.name)"
+        >
+          <span class="mood-emoji">{{ mood.emoji }}</span>
+          <span class="mood-name">{{ mood.name }}</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- DEFAULT STATE -->
+    <section *ngIf="!selectedMood" class="default-state glass">
+      <h2>✨ Pick a mood to unlock recommendations</h2>
+      <p>
+        This Angular web app dynamically filters songs based on user mood using
+        event binding, conditional rendering, and list rendering.
+      </p>
+    </section>
+
+    <!-- RESULT HEADER -->
+    <section *ngIf="selectedMood" class="now-playing glass">
+      <div class="now-left">
+        <p class="small-label">🎧 CURRENT MOOD</p>
+        <h2>{{ selectedMood }} Mood Activated</h2>
+        <p class="sub-text">
+          Here are some songs that match your current vibe. Click the button to open them on YouTube.
+        </p>
+      </div>
+
+      <div class="search-box">
+        <input
+          type="text"
+          placeholder="Search by title or artist..."
+          [value]="searchText"
+          (input)="onSearch($event)"
+        />
+      </div>
+    </section>
+
+    <!-- SONGS -->
+    <section *ngIf="selectedMood" class="results-section">
+      <div class="songs-grid">
+        <div class="song-card glass" *ngFor="let song of filteredSongs">
+          <div class="song-top">
+            <div class="song-icon">{{ song.emoji }}</div>
+            <span class="mood-tag">{{ song.mood }}</span>
+          </div>
+
+          <div class="song-content">
+            <h3>{{ song.title }}</h3>
+            <p class="artist">🎤 {{ song.artist }}</p>
+            <p class="vibe">{{ song.vibe }}</p>
+
+            <a
+              class="youtube-btn"
+              [href]="song.youtube"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ▶ Open on YouTube
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty-state glass" *ngIf="filteredSongs.length === 0">
+        <h3>No songs found 😢</h3>
+        <p>Try searching another title/artist or reset and choose another mood.</p>
+      </div>
+    </section>
+
+    <!-- EXTRA RECOMMENDATION TIP -->
+    <section *ngIf="selectedMood" class="tip-box glass">
+      <h3>💡 Smart Recommendation Tip</h3>
+      <p>
+        You can click any song card button to instantly open related results on YouTube,
+        which helps users discover even more songs in the same mood category.
+      </p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer glass">
+      <p>💜 Built with Angular • TypeScript • HTML • CSS • Git • GitHub Pages</p>
+      <p>Mini Project - Front End Development</p>
+    </footer>
   </div>
 </div>
