@@ -1,0 +1,23 @@
+<div class="container">
+  <h1>Mood-Based Song Recommendation</h1>
+  <p class="subtitle">Choose your mood and get song suggestions 🎵</p>
+
+  <div class="mood-buttons">
+    <button (click)="selectMood('Happy')">😊 Happy</button>
+    <button (click)="selectMood('Sad')">😢 Sad</button>
+    <button (click)="selectMood('Chill')">😌 Chill</button>
+    <button (click)="selectMood('Energetic')">⚡ Energetic</button>
+  </div>
+
+  <div *ngIf="selectedMood" class="results">
+    <h2>{{ selectedMood }} Songs</h2>
+
+    <div class="song-grid">
+      <div class="song-card" *ngFor="let song of filteredSongs">
+        <img [src]="song.image" [alt]="song.title">
+        <h3>{{ song.title }}</h3>
+        <p>{{ song.artist }}</p>
+      </div>
+    </div>
+  </div>
+</div>
